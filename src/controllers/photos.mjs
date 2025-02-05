@@ -11,7 +11,7 @@ const Photos = class Photos {
   getAllPhotos() {
     this.app.get('/album/:idalbum/photos', (req, res) => {
       try {
-        this.PhotoModel.find({ albumId: req.params.idalbum }).then((photos) => {
+        this.PhotoModel.find({ album: req.params.idalbum }).then((photos) => {
           res.status(200).json(photos || []);
         }).catch(() => {
           res.status(500).json({
@@ -34,7 +34,7 @@ const Photos = class Photos {
     this.app.get('/album/:idalbum/photo/:idphotos', (req, res) => {
       try {
         this.PhotoModel.findOne({
-          albumId: req.params.idalbum,
+          album: req.params.idalbum,
           _id: req.params.idphotos
         }).then((photo) => {
           res.status(200).json(photo || {});
@@ -58,7 +58,7 @@ const Photos = class Photos {
   createPhoto() {
     this.app.post('/album/:idalbum/photo', (req, res) => {
       try {
-        const photoModel = new this.PhotoModel({ ...req.body, albumId: req.params.idalbum });
+        const photoModel = new this.PhotoModel({ ...req.body, album: req.params.idalbum });
 
         photoModel.save().then((photo) => {
           res.status(200).json(photo || {});
@@ -83,7 +83,7 @@ const Photos = class Photos {
     this.app.put('/album/:idalbum/photo/:idphotos', (req, res) => {
       try {
         this.PhotoModel.findOneAndUpdate(
-          { albumId: req.params.idalbum, _id: req.params.idphotos },
+          { album: req.params.idalbum, _id: req.params.idphotos },
           req.body,
           { new: true }
         ).then((photo) => {
@@ -109,7 +109,7 @@ const Photos = class Photos {
     this.app.delete('/album/:idalbum/photo/:idphotos', (req, res) => {
       try {
         this.PhotoModel.findOneAndDelete({
-          albumId: req.params.idalbum,
+          album: req.params.idalbum,
           _id: req.params.idphotos
         }).then((photo) => {
           res.status(200).json(photo || {});

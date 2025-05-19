@@ -1,0 +1,303 @@
+{
+	"info": {
+		"_postman_id": "1c8ec52b-0bc8-45e9-932f-cef4007f26ef",
+		"name": "ALBUMS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26794875"
+	},
+	"item": [
+		{
+			"name": "create album",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"SAAD TEST\",\n  \"description\": \"C'est un test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/album",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"album"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Album",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/album/68285dd20c45bc79fe756045",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"album",
+						"68285dd20c45bc79fe756045"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Album",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"SAAD TEST UPDATED\",\n  \"description\": \"Mise à jour de l'album\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/album/68285dd20c45bc79fe756045",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"album",
+						"68285dd20c45bc79fe756045"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Albums",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/albums",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"albums"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create photo",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Photo de test\",\n    \"url\": \"http://example.com/photo.jpg\",\n    \"description\": \"Ceci est une photo de test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/album/68285dd20c45bc79fe756045/photo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"album",
+						"68285dd20c45bc79fe756045",
+						"photo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all photos from album",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/album/68285dd20c45bc79fe756045/photos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"album",
+						"68285dd20c45bc79fe756045",
+						"photos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get photos from album by ID",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/album/68285dd20c45bc79fe756045/photo/68285f0e0c45bc79fe75604a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"album",
+						"68285dd20c45bc79fe756045",
+						"photo",
+						"68285f0e0c45bc79fe75604a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MAJ photos ",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Photo mise à jour\",\n    \"description\": \"Description mise à jour\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/album/68285dd20c45bc79fe756045/photo/68285f0e0c45bc79fe75604a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"album",
+						"68285dd20c45bc79fe756045",
+						"photo",
+						"68285f0e0c45bc79fe75604a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE PHOTOS FROM ALBUM BY ID",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/album/68285dd20c45bc79fe756045/photo/68285f0e0c45bc79fe75604a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"album",
+						"68285dd20c45bc79fe756045",
+						"photo",
+						"68285f0e0c45bc79fe75604a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test photos deleted ",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/album/68285dd20c45bc79fe756045/photos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"album",
+						"68285dd20c45bc79fe756045",
+						"photos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Album",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/album/68285dd20c45bc79fe756045",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"album",
+						"68285dd20c45bc79fe756045"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

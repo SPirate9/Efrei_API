@@ -5,7 +5,8 @@ import bodyParser from 'body-parser';
 import compression from 'compression';
 import cors from 'cors';
 import helmet from 'helmet';
-
+import jwt from 'jsonwebtoken';
+import rateLimit from 'express-rate-limit';
 // Core
 import config from './config.mjs';
 import routes from './controllers/routes.mjs';
@@ -66,11 +67,19 @@ const Server = class Server {
     this.app.use(cors());
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(bodyParser.json());
+
+    const limiter = rateLimit({
+      windowMs: 60 * 60 * 1000,
+      max: 100,
+      message: { code: 429, message: 'Trop de requêtes, réessayez plus tard.' }
+    });
+    this.app.use(limiter);
   }
 
   routes() {
-    new routes.Albums(this.app, this.connect);
-    new routes.Photos(this.app, this.connect);
+    new routes.Albums(this.app, this.connect, this.AuthToken);
+    new routes.Photos(this.app, this.connect, this.AuthToken);
+    new routes.Auth(this.app);
 
     this.app.use((req, res) => {
       res.status(404).json({
@@ -83,6 +92,25 @@ const Server = class Server {
   security() {
     this.app.use(helmet());
     this.app.disable('x-powered-by');
+  }
+
+  AuthToken(req, res, next) {
+    const token = req.headers.authorization;
+    if (!token) {
+      return res.status(403).json({
+        code: 403,
+        message: 'Forbidden: Token manquant'
+      });
+    }
+    return jwt.verify(token, 'test', (err) => {
+      if (err) {
+        return res.status(401).json({
+          code: 401,
+          message: 'Token invalide'
+        });
+      }
+      return next();
+    });
   }
 
   async run() {

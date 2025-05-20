@@ -1,17 +1,19 @@
+import Validator from 'better-validator';
 import PhotoModel from '../models/photo.mjs';
 import AlbumModel from '../models/album.mjs';
 
 const Photos = class Photos {
-  constructor(app, connect) {
+  constructor(app, connect, AuthToken) {
     this.app = app;
     this.PhotoModel = connect.model('Photo', PhotoModel);
     this.AlbumModel = connect.model('Album', AlbumModel);
+    this.AuthToken = AuthToken;
 
     this.run();
   }
 
   getAllPhotos() {
-    this.app.get('/album/:idalbum/photos', (req, res) => {
+    this.app.get('/album/:idalbum/photos', this.AuthToken, (req, res) => {
       try {
         this.PhotoModel.find({ album: req.params.idalbum }).populate('album').then((photos) => {
           res.status(200).json(photos || []);
@@ -33,7 +35,7 @@ const Photos = class Photos {
   }
 
   getPhotoById() {
-    this.app.get('/album/:idalbum/photo/:idphotos', (req, res) => {
+    this.app.get('/album/:idalbum/photo/:idphotos', this.AuthToken, (req, res) => {
       try {
         this.PhotoModel.findOne({
           album: req.params.idalbum,
@@ -58,10 +60,16 @@ const Photos = class Photos {
   }
 
   createPhoto() {
-    this.app.post('/album/:idalbum/photo', (req, res) => {
+    this.app.post('/album/:idalbum/photo', this.AuthToken, (req, res) => {
       try {
-        const photoModel = new this.PhotoModel({ ...req.body, album: req.params.idalbum });
+        const validator = new Validator();
+        validator(req.body.title).required().isString().isLength({ min: 2, max: 100 });
 
+        const errors = validator.run();
+        if (errors.length > 0) {
+          return res.status(400).json({ errors });
+        }
+        const photoModel = new this.PhotoModel({ ...req.body, album: req.params.idalbum });
         photoModel.save().then((photo) => {
           this.AlbumModel.findByIdAndUpdate(req.params.idalbum, { $push: { photos: photo._id } }, { new: true }).populate('photos').then((album) => {
             res.status(201).json({ photo, album });
@@ -90,8 +98,14 @@ const Photos = class Photos {
   }
 
   updatePhoto() {
-    this.app.put('/album/:idalbum/photo/:idphotos', (req, res) => {
+    this.app.put('/album/:idalbum/photo/:idphotos', this.AuthToken, (req, res) => {
       try {
+        const validator = new Validator();
+        validator(req.body.title).required().isString().isLength({ min: 2, max: 100 });
+        const errors = validator.run();
+        if (errors.length > 0) {
+          return res.status(400).json({ errors });
+        }
         this.PhotoModel.findOneAndUpdate(
           { album: req.params.idalbum, _id: req.params.idphotos },
           req.body,
@@ -116,7 +130,7 @@ const Photos = class Photos {
   }
 
   deletePhoto() {
-    this.app.delete('/album/:idalbum/photo/:idphotos', (req, res) => {
+    this.app.delete('/album/:idalbum/photo/:idphotos', this.AuthToken, (req, res) => {
       try {
         this.PhotoModel.findOneAndDelete({
           album: req.params.idalbum,

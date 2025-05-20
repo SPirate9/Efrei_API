@@ -80,6 +80,7 @@ const Server = class Server {
     new routes.Albums(this.app, this.connect, this.AuthToken);
     new routes.Photos(this.app, this.connect, this.AuthToken);
     new routes.Auth(this.app);
+    new routes.Pipeline(this.app);
 
     this.app.use((req, res) => {
       res.status(404).json({

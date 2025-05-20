@@ -1,13 +1,14 @@
 import axios from 'axios';
 
 class Pipeline {
-  constructor(app) {
+  constructor(app, AuthToken) {
     this.app = app;
+    this.AuthToken = AuthToken;
     this.getData();
   }
 
   getData() {
-    this.app.get('/pipeline', async (req, res) => {
+    this.app.get('/pipeline', this.AuthToken, async (req, res) => {
       try {
         const headers = {
           headers: {

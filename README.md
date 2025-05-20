@@ -80,3 +80,29 @@ Show an user by id.
 
 ### Dev mode
 ```npm run dev```
+
+---
+
+## Exemple d'appel à l'API `/pipeline` (HTTP)
+
+La route `/pipeline` est sécurisée par un token d'authentification (à obtenir via la route http://localhost:3000/auth).
+
+Exemple de réponse :
+
+![Exemple pipeline](./RENDU/pipeline.png)
+
+---
+
+## Exemple d'appel à l'API `/pipeline` (HTTPS)
+
+Le serveur peut aussi être lancé en HTTPS avec :
+
+```bash
+node src/server-https.mjs
+```
+
+Exemple de réponse en HTTPS :
+
+![Exemple pipeline HTTPS](./RENDU/PipelineHTTPS.png)
+
+---
